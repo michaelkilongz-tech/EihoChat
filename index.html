@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EihiChat AI Chat</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+</head>
+<body class="light-theme">
+    <!-- Loading Screen -->
+    <div id="loadingScreen" class="loading-screen">
+        <div class="loading-content">
+            <div class="loading-spinner">
+                <i class="fas fa-brain fa-spin"></i>
+            </div>
+            <h2>loading.. EihoChat AI</h2>
+        </div>
+    </div>
+
+    <!-- Login Screen -->
+    <div id="loginScreen" class="screen">
+        <div class="login-container">
+            <!-- Logo -->
+            <div class="logo-section">
+                <div class="logo">
+                    <i class="fas fa-brain"></i>
+                    <h1>EihoChat AI</h1>
+                </div>
+                <p class="tagline">Advanced AI Chat Interface</p>
+            </div>
+
+            <!-- Tabs -->
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="login">Login</button>
+                <button class="tab-btn" data-tab="register">Register</button>
+            </div>
+
+            <!-- Login Form -->
+            <form id="loginForm" class="form active">
+                <div class="input-group">
+                    <label>Email Address</label>
+                    <input type="email" id="loginEmail" placeholder="your@email.com" required>
+                </div>
+                <div class="input-group">
+                    <label>Password</label>
+                    <div class="password-input">
+                        <input type="password" id="loginPassword" placeholder="••••••••" required>
+                        <button type="button" class="toggle-password">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="form-options">
+                    <label class="checkbox">
+                        <input type="checkbox" id="rememberMe">
+                        <span>Remember me</span>
+                    </label>
+                    <a href="#" class="forgot-link">Forgot password?</a>
+                </div>
+                <button type="submit" class="btn-primary">
+                    <i class="fas fa-sign-in-alt"></i> Sign In
+                </button>
+            </form>
+
+            <!-- Register Form -->
+            <form id="registerForm" class="form">
+                <div class="input-group">
+                    <label>Full Name</label>
+                    <input type="text" id="registerName" placeholder="John Doe" required>
+                </div>
+                <div class="input-group">
+                    <label>Email Address</label>
+                    <input type="email" id="registerEmail" placeholder="your@email.com" required>
+                </div>
+                <div class="input-group">
+                    <label>Password</label>
+                    <div class="password-input">
+                        <input type="password" id="registerPassword" placeholder="••••••••" required>
+                        <button type="button" class="toggle-password">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>Confirm Password</label>
+                    <input type="password" id="confirmPassword" placeholder="••••••••" required>
+                </div>
+                <label class="checkbox">
+                    <input type="checkbox" id="acceptTerms" required>
+                    <span>I agree to <a href="#" class="link">Terms</a> and <a href="#" class="link">Privacy Policy</a></span>
+                </label>
+                <button type="submit" class="btn-primary">
+                    <i class="fas fa-user-plus"></i> Create Account
+                </button>
+            </form>
+
+            <!-- Guest Option -->
+            <div class="guest-section">
+                <div class="divider">or</div>
+                <button id="guestBtn" class="btn-secondary">
+                    <i class="fas fa-user-clock"></i> Continue as Guest
+                </button>
+                <p class="guest-note">Guest users have limited features</p>
+            </div>
+
+            <!-- Footer -->
+            <div class="login-footer">
+                <div class="footer-links">
+                    <a href="#" data-page="about">About Us</a>
+                    <a href="#" data-page="privacy">Privacy</a>
+                    <a href="#" data-page="terms">Terms</a>
+                    <a href="#" data-page="contact">Contact</a>
+                </div>
+                <p class="copyright">© 2025 EihoChat AI</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App -->
+    <div id="appScreen" class="screen hidden">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <!-- User Profile -->
+            <div class="user-profile">
+                <div class="avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="user-info">
+                    <h4 id="userName">Guest User</h4>
+                    <p id="userEmail">guest@example.com</p>
+                </div>
+                <button class="sidebar-toggle" id="sidebarToggle">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+            </div>
+
+            <!-- New Chat Button -->
+            <button id="newChatBtn" class="new-chat-btn">
+                <i class="fas fa-plus"></i> New Chat
+            </button>
+
+            <!-- Chat History -->
+            <div class="chat-history">
+                <div class="section-header">
+                    <h4><i class="fas fa-history"></i> Recent Chats</h4>
+                    <button class="icon-btn" id="clearHistoryBtn" title="Clear all">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+                <div id="chatList" class="chat-list">
+                    <!-- Chats will load here -->
+                </div>
+            </div>
+
+            <!-- Settings Section -->
+            <div class="sidebar-section">
+                <div class="section-header">
+                    <h4><i class="fas fa-cog"></i> Settings</h4>
+                </div>
+                <button class="sidebar-btn" data-action="settings">
+                    <i class="fas fa-sliders-h"></i> App Settings
+                </button>
+                <button class="sidebar-btn" data-action="theme">
+                    <i class="fas fa-palette"></i> Theme
+                    <span class="badge" id="themeBadge">Light</span>
+                </button>
+                <button class="sidebar-btn" data-action="export">
+                    <i class="fas fa-download"></i> Export Data
+                </button>
+            </div>
+
+            <!-- Help Section -->
+            <div class="sidebar-section">
+                <div class="section-header">
+                    <h4><i class="fas fa-question-circle"></i> Help</h4>
+                </div>
+                <button class="sidebar-btn" data-action="about">
+                    <i class="fas fa-info-circle"></i> About Us
+                </button>
+                <button class="sidebar-btn" data-action="feedback">
+                    <i class="fas fa-comment-dots"></i> Feedback
+                </button>
+                <button class="sidebar-btn" data-action="help">
+                    <i class="fas fa-life-ring"></i> Help Center
+                </button>
+            </div>
+
+            <!-- Footer -->
+            <div class="sidebar-footer">
+                <button id="logoutBtn" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+                <div class="app-version">
+                    <span>v1.0.0</span>
+                    <span class="status-dot online"></span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Bar -->
+            <header class="top-bar">
+                <div class="top-left">
+                    <button id="menuToggle" class="icon-btn">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div class="chat-info">
+                        <h3 id="currentChatTitle">New Chat</h3>
+                        <div class="model-info">
+                            <i class="fas fa-microchip"></i>
+                            <span id="currentModel">Llama 3.1 8B</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="top-right">
+                    <div class="stats">
+                        <div class="stat">
+                            <i class="fas fa-bolt"></i>
+                            <span id="responseTime">-</span>
+                        </div>
+                        <div class="stat">
+                            <i class="fas fa-database"></i>
+                            <span id="tokenCount">0</span>
+                        </div>
+                    </div>
+                    <button class="icon-btn" id="shareChatBtn" title="Share">
+                        <i class="fas fa-share-alt"></i>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Chat Messages -->
+            <div class="chat-container" id="chatContainer">
+                <!-- Messages load here -->
+                <div class="message ai-message">
+                    <div class="avatar">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="message-content">
+                        <div class="message-header">
+                            <span class="sender">DeepSeek AI</span>
+                            <span class="time">Just now</span>
+                        </div>
+                        <div class="message-body">
+                            <p>Hello! I'm DeepSeek AI. How can I assist you today?</p>
+                        </div>
+                        <div class="message-actions">
+                            <button class="action-btn" data-action="copy">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                            <button class="action-btn" data-action="like">
+                                <i class="fas fa-thumbs-up"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Typing Indicator -->
+            <div class="typing-indicator hidden" id="typingIndicator">
+                <div class="typing-avatar">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div class="typing-content">
+                    <div class="typing-dots">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                    <p>AI is typing...</p>
+                </div>
+            </div>
+
+            <!-- Input Area -->
+            <div class="input-area">
+                <div class="input-container">
+                    <!-- Model Selector -->
+                    <div class="model-selector">
+                        <select id="modelSelect">
+                            <option value="llama-3.1-8b-instant">Llama 3.1 8B (Fast)</option>
+                            <option value="llama-3.1-70b-versatile">Llama 3.1 70B (Powerful)</option>
+                            <option value="mixtral-8x7b-32768">Mixtral 8x7B</option>
+                        </select>
+                    </div>
+
+                    <!-- Text Input -->
+                    <div class="text-input-wrapper">
+                        <textarea 
+                            id="messageInput" 
+                            placeholder="Message DeepSeek AI..." 
+                            rows="1"
+                        ></textarea>
+                        <div class="input-actions">
+                            <button class="icon-btn" id="attachFileBtn" title="Attach file">
+                                <i class="fas fa-paperclip"></i>
+                            </button>
+                            <button class="icon-btn" id="voiceInputBtn" title="Voice input">
+                                <i class="fas fa-microphone"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Send Button -->
+                    <button id="sendBtn" class="send-btn" disabled>
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+                <div class="input-footer">
+                    <p class="disclaimer">
+                        <i class="fas fa-exclamation-circle"></i>
+                        AI may produce inaccurate information
+                    </p>
+                    <div class="footer-buttons">
+                        <button id="clearChatBtn" class="text-btn">
+                            <i class="fas fa-trash"></i> Clear
+                        </button>
+                        <button id="saveChatBtn" class="text-btn">
+                            <i class="fas fa-save"></i> Save
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <div id="settingsModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-cog"></i> Settings</h2>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <!-- Settings content -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toast" class="toast hidden">
+        <div class="toast-content">
+            <i class="fas fa-check-circle"></i>
+            <span class="toast-message">Success!</span>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.3.0/marked.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
