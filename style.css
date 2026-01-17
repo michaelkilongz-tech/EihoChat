@@ -1099,6 +1099,55 @@ body {
     padding: 20px;
 }
 
+/* Sidebar toggle fix */
+.sidebar.collapsed {
+    transform: translateX(-100%);
+    display: none;
+}
+
+.main-content.expanded {
+    margin-left: 0;
+    width: 100%;
+}
+
+.menu-btn {
+    display: block !important;
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    font-size: 20px;
+    cursor: pointer;
+    padding: 10px;
+}
+
+/* Textarea fix */
+#messageInput {
+    width: 100%;
+    min-height: 50px;
+    max-height: 150px;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-size: 16px;
+    resize: none;
+    font-family: inherit;
+}
+
+#messageInput:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+/* Hide login screen */
+#loginScreen {
+    display: none !important;
+}
+
+#appScreen {
+    display: flex !important;
+}
 .modal-content {
     background: var(--bg-primary);
     border-radius: var(--radius-lg);
