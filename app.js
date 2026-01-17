@@ -2,7 +2,7 @@ class DeepSeekApp {
     constructor() {
         // Configuration
         this.config = {
-            backendUrl: 'https://your-worker.your-username.workers.dev', // ← YOUR BACKEND URL HERE
+            backendUrl: 'https://eiho-chat.vercel.app/api/chat', // ← YOUR BACKEND URL HERE
             defaultModel: 'llama-3.1-8b-instant',
             maxTokens: 1024,
             temperature: 0.7,
